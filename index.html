@@ -24,6 +24,7 @@ body {
   border-radius:22px;
   text-align:center;
   box-shadow:0 15px 40px rgba(0,0,0,0.25);
+  transition:opacity 0.8s ease;
 }
 
 img {
@@ -61,9 +62,14 @@ button {
   cursor:pointer;
 }
 
+button:disabled {
+  opacity:0.6;
+  cursor:default;
+}
+
 .fade-in {
   opacity:0;
-  animation:fade 1.8s forwards;
+  animation:fade 1.5s forwards;
 }
 
 @keyframes fade {
@@ -114,64 +120,55 @@ button {
   </div>
 
   <button id="startBtn">Tap to begin 💕</button>
+  <p id="startingMsg" style="display:none;opacity:0.7;margin-top:10px;">
+    Starting… don’t rush 😌
+  </p>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
 const steps = [
-  {
-    img:"memory1.jpg",
-    text:"Hyderabad.<br>May 18. Inorbit Mall.<br><span style='font-size:0.9rem;opacity:0.7;'>You remember how that felt, don’t you?</span>",
-    wait:14000
-  },
-  {
-    img:"memory2.jpg",
-    text:"After that, I kept coming back.<br>Not because it was easy…<br>but because it felt right.<br><span style='font-size:0.9rem;opacity:0.7;'>This is where it quietly became us.</span>",
-    wait:14000
-  },
-  {
-    img:"memory3.jpg",
-    text:"Then you left for Mizoram.<br>Three months.<br>Just trust… and missing you quietly.<br><span style='font-size:0.9rem;opacity:0.7;'>This part wasn’t easy for either of us.</span>",
-    wait:15000
-  },
-  {
-    img:"final.jpg",
-    text:"And then Goa happened.<br>Not perfect. Not cinematic.<br>Just us…<br><span style='font-size:0.9rem;opacity:0.7;'>This is when I knew we were real.</span>",
-    wait:13000
-  },
-  {
-    img:"final.jpg",
-    text:"After Goa, we didn’t rush anything.<br>We just kept choosing each other…<br><span style='font-size:0.9rem;opacity:0.7;'>This is still happening. Even now.</span>",
-    wait:13000
-  },
-  {
-    img:"final.jpg",
-    text:"<strong>Josephine Lalbiaknungi…</strong><br>will you be my Valentine?",
-    wait:0
-  }
+  { img:"memory1.jpg", text:"Hyderabad.<br>May 18. Inorbit Mall.<br><span style='font-size:0.9rem;opacity:0.7;'>You remember how that felt, don’t you?</span>", wait:14000 },
+  { img:"memory2.jpg", text:"After that, I kept coming back.<br>Not because it was easy…<br>but because it felt right.<br><span style='font-size:0.9rem;opacity:0.7;'>This is where it quietly became us.</span>", wait:14000 },
+  { img:"memory3.jpg", text:"Then you left for Mizoram.<br>Three months.<br>Just trust… and missing you quietly.<br><span style='font-size:0.9rem;opacity:0.7;'>This part wasn’t easy for either of us.</span>", wait:15000 },
+  { img:"final.jpg", text:"And then Goa happened.<br>Not perfect. Not cinematic.<br>Just us…<br><span style='font-size:0.9rem;opacity:0.7;'>This is when I knew we were real.</span>", wait:13000 },
+  { img:"final.jpg", text:"After Goa, we didn’t rush anything.<br>We just kept choosing each other…<br><span style='font-size:0.9rem;opacity:0.7;'>This is still happening. Even now.</span>", wait:13000 },
+  { img:"final.jpg", text:"<strong>Josephine Lalbiaknungi…</strong><br>will you be my Valentine?", wait:0 }
 ];
 
 let current = 0;
+let started = false;
 const box = document.getElementById("box");
 
 document.getElementById("startBtn").onclick = start;
 
 function start() {
+  if (started) return;
+  started = true;
+
+  const btn = document.getElementById("startBtn");
+  const msg = document.getElementById("startingMsg");
+
+  btn.disabled = true;
+  msg.style.display = "block";
+
+  setTimeout(() => {
+    box.style.opacity = 0;
+  }, 16000);
+
   setTimeout(() => {
     const music = document.getElementById("bgMusic");
     music.currentTime = 18;
     music.play();
+    box.style.opacity = 1;
     showStep();
   }, 18000);
 }
 
 function showStep() {
   const step = steps[current];
-  box.innerHTML = `
-    <img src="${step.img}">
-    <p class="fade-in">${step.text}</p>
-  `;
+  box.innerHTML = `<img src="${step.img}"><p class="fade-in">${step.text}</p>`;
 
   if (step.wait > 0) {
     setTimeout(() => {
@@ -212,9 +209,8 @@ window.finalYes = function () {
 
 function startCountdown() {
   const target = new Date("February 12, 2026 12:00:00").getTime();
-
   setInterval(() => {
-    const now = new Date().getTime();
+    const now = Date.now();
     const diff = target - now;
 
     if (diff <= 0) {
