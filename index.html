@@ -120,39 +120,58 @@ button {
 document.addEventListener("DOMContentLoaded", function () {
 
 const steps = [
-  { img:"us.jpg", text:"Before you read anything…<br>don’t rush.<br>Just stay here with the silence.", wait:12000 },
-  { img:"memory1.jpg", text:"Hyderabad.<br>May 18. Inorbit Mall.<br><span style='font-size:0.9rem;opacity:0.7;'>You remember how that felt, don’t you?</span>", wait:14000 },
-  { img:"memory2.jpg", text:"After that, I kept coming back.<br>Not because it was easy…<br>but because it felt right.<br><span style='font-size:0.9rem;opacity:0.7;'>This is where it quietly became us.</span>", wait:14000 },
-  { img:"memory3.jpg", text:"Then you left for Mizoram.<br>Three months.<br>Just trust… and missing you quietly.<br><span style='font-size:0.9rem;opacity:0.7;'>This part wasn’t easy for either of us.</span>", wait:15000 },
-  { img:"final.jpg", text:"And then Goa happened.<br>Not perfect. Not cinematic.<br>Just us…<br><span style='font-size:0.9rem;opacity:0.7;'>This is when I knew we were real.</span>", wait:13000 },
-  { img:"final.jpg", text:"After Goa, we didn’t rush anything.<br>We just kept choosing each other…<br><span style='font-size:0.9rem;opacity:0.7;'>This is still happening. Even now.</span>", wait:13000 },
-  { img:"final.jpg", text:"<strong>Josephine Lalbiaknungi…</strong><br>will you be my Valentine?", wait:0 }
+  {
+    img:"memory1.jpg",
+    text:"Hyderabad.<br>May 18. Inorbit Mall.<br><span style='font-size:0.9rem;opacity:0.7;'>You remember how that felt, don’t you?</span>",
+    wait:14000
+  },
+  {
+    img:"memory2.jpg",
+    text:"After that, I kept coming back.<br>Not because it was easy…<br>but because it felt right.<br><span style='font-size:0.9rem;opacity:0.7;'>This is where it quietly became us.</span>",
+    wait:14000
+  },
+  {
+    img:"memory3.jpg",
+    text:"Then you left for Mizoram.<br>Three months.<br>Just trust… and missing you quietly.<br><span style='font-size:0.9rem;opacity:0.7;'>This part wasn’t easy for either of us.</span>",
+    wait:15000
+  },
+  {
+    img:"final.jpg",
+    text:"And then Goa happened.<br>Not perfect. Not cinematic.<br>Just us…<br><span style='font-size:0.9rem;opacity:0.7;'>This is when I knew we were real.</span>",
+    wait:13000
+  },
+  {
+    img:"final.jpg",
+    text:"After Goa, we didn’t rush anything.<br>We just kept choosing each other…<br><span style='font-size:0.9rem;opacity:0.7;'>This is still happening. Even now.</span>",
+    wait:13000
+  },
+  {
+    img:"final.jpg",
+    text:"<strong>Josephine Lalbiaknungi…</strong><br>will you be my Valentine?",
+    wait:0
+  }
 ];
 
 let current = 0;
-let musicStarted = false;
-
 const box = document.getElementById("box");
+
 document.getElementById("startBtn").onclick = start;
 
 function start() {
-  showStep();
+  setTimeout(() => {
+    const music = document.getElementById("bgMusic");
+    music.currentTime = 18;
+    music.play();
+    showStep();
+  }, 18000);
 }
 
 function showStep() {
   const step = steps[current];
-
   box.innerHTML = `
     <img src="${step.img}">
     <p class="fade-in">${step.text}</p>
   `;
-
-  if (current === 1 && !musicStarted) {
-    const music = document.getElementById("bgMusic");
-    music.currentTime = 18;
-    music.play();
-    musicStarted = true;
-  }
 
   if (step.wait > 0) {
     setTimeout(() => {
@@ -183,37 +202,43 @@ window.finalYes = function () {
 
   setTimeout(() => {
     box.innerHTML = `
-      <p class="fade-in">Also… I know you like Henry Cavill 😌</p>
-      <div id="henry" class="character">🕴️</div>
-      <button onclick="kickHenry()">Kick him out 🦶</button>
+      <h3 class="fade-in">⏳ Counting down to Feb 12, 12:00 PM</h3>
+      <p class="fade-in"><strong id="countdown"></strong></p>
+      <p class="fade-in"><em>I can’t wait to meet my baby 😌</em></p>
     `;
-  }, 3500);
+    startCountdown();
+  }, 3000);
 };
 
-window.kickHenry = function () {
-  document.getElementById("henry").classList.add("kick");
-  setTimeout(() => {
-    box.innerHTML = `
-      <h2 class="fade-in">❤️</h2>
-      <p class="fade-in">
-        <strong>English:</strong> I love you<br>
-        <strong>Mizo:</strong> Ka hmangaih che<br>
-        <strong>Japanese:</strong> 愛してる (Aishiteru)<br>
-        <strong>Korean:</strong> 사랑해 (Saranghae)<br>
-        <strong>German:</strong> Ich liebe dich
-      </p>
-    `;
-  }, 900);
-};
+function startCountdown() {
+  const target = new Date("February 12, 2026 12:00:00").getTime();
+
+  setInterval(() => {
+    const now = new Date().getTime();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      document.getElementById("countdown").innerText = "It’s today ❤️";
+      return;
+    }
+
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor((diff / (1000*60*60)) % 24);
+    const m = Math.floor((diff / (1000*60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("countdown").innerText =
+      `${d}d ${h}h ${m}m ${s}s`;
+  }, 1000);
+}
 
 function makeNoRun() {
   const noBtn = document.getElementById("noBtn");
   if (!noBtn) return;
 
   function move() {
-    const x = Math.random() * 160 - 80;
-    const y = Math.random() * 160 - 80;
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    noBtn.style.transform =
+      `translate(${Math.random()*160-80}px,${Math.random()*160-80}px)`;
   }
 
   noBtn.addEventListener("mouseenter", move);
