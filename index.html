@@ -52,7 +52,7 @@ button {
 
 .fade-in {
   opacity:0;
-  animation:fade 2.5s forwards;
+  animation:fade 2s forwards;
 }
 
 @keyframes fade {
@@ -61,7 +61,7 @@ button {
 
 .character {
   font-size:80px;
-  animation:enter 1.5s ease forwards;
+  animation:enter 1.2s ease forwards;
 }
 
 @keyframes enter {
@@ -104,107 +104,18 @@ const steps = [
   {
     img:"memory1.jpg",
     text:"Hyderabad.<br>May 18. Inorbit Mall.<br>I didn’t know it then…<br>but something in me felt calm for the first time.",
-    wait:52000
+    wait:12000
   },
   {
     img:"memory2.jpg",
     text:"After that, I kept coming back.<br>Not because it was easy…<br>but because it felt right.<br>Some people become reasons.",
-    wait:50000
+    wait:12000
   },
   {
     img:"memory3.jpg",
     text:"Then you left for Mizoram.<br>Three months.<br>No hugs. No eye contact.<br>Just trust…<br>and missing you quietly.",
-    wait:60000
+    wait:14000
   },
   {
     img:"final.jpg",
-    text:"And then Goa happened.<br>Not perfect. Not cinematic.<br>Just us…<br>and the feeling that this was real.",
-    wait:35000
-  },
-  {
-    img:"final.jpg",
-    text:"After Goa, we didn’t rush anything.<br>We just kept showing up.<br>In calls. In patience.<br>In choosing each other…<br>even on ordinary days.",
-    wait:35000
-  },
-  {
-    img:"final.jpg",
-    text:"<strong>Josephine Lalbiaknungi…</strong><br>will you be my Valentine?",
-    wait:0
-  }
-];
-
-let current = 0;
-
-function start(){
-  document.getElementById("bgMusic").play();
-  showStep();
-}
-
-function showStep(){
-  const box = document.getElementById("box");
-  const step = steps[current];
-
-  box.innerHTML = `
-    <img src="${step.img}">
-    <p class="fade-in">${step.text}</p>
-    <button id="nextBtn" disabled>Continue</button>
-  `;
-
-  if(step.wait === 0){
-    document.getElementById("nextBtn").outerHTML =
-      `<button onclick="finalYes()">Yes 😍</button>`;
-  } else {
-    setTimeout(()=>{
-      const btn=document.getElementById("nextBtn");
-      btn.disabled=false;
-      btn.onclick=next;
-    }, step.wait);
-  }
-}
-
-function next(){
-  current++;
-  showStep();
-}
-
-function finalYes(){
-  const box=document.getElementById("box");
-
-  box.innerHTML=`
-    <h2 class="fade-in">I love you ❤️</h2>
-    <p class="fade-in">
-      I don’t know what the future looks like…<br>
-      I just know I want you in it.
-    </p>
-  `;
-
-  setTimeout(()=>{
-    box.innerHTML=`
-      <p class="fade-in">Also… I know you like Henry Cavill 😌</p>
-      <div id="henry" class="character">🕴️</div>
-      <button onclick="kickHenry()">Kick him out 🦶</button>
-    `;
-  },3000);
-}
-
-function kickHenry(){
-  const h=document.getElementById("henry");
-  h.classList.add("kick");
-
-  setTimeout(()=>{
-    document.getElementById("box").innerHTML=`
-      <h2 class="fade-in">😂❤️</h2>
-      <p class="fade-in">
-        Okay… he’s gone.<br><br>
-        But I stayed.<br>
-        I chose you.<br>
-        And I always will.
-      </p>
-    `;
-  },900);
-}
-</script>
-
-</body>
-</html>
-
+    text:"And then Goa ha
