@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +52,7 @@ button {
 
 .fade-in {
   opacity: 0;
-  animation: fade 2s forwards;
+  animation: fade 1.8s forwards;
 }
 
 @keyframes fade {
@@ -75,5 +75,29 @@ button {
 
 @keyframes kicked {
   to {
-    transform: translateX(-150vw)
+    transform: translateX(-150vw) rotate(-720deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
 
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="thlah-lo-turin.mp3" type="audio/mpeg">
+</audio>
+
+<div class="box" id="box">
+  <img src="us.jpg">
+  <p>I made something just for you.</p>
+  <button id="startBtn">Tap to begin 💕</button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+const steps = [
+  {
+    img: "us.jpg",
+    text: "Before you read anything…<br>don’t rush.<br>Just stay here with the silence.",
